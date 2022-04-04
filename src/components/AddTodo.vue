@@ -3,7 +3,7 @@
         <form @submit.prevent="onSubmit">
             <div class="title">New Todo:</div> 
             <input type="text" v-model="title">
-            <button type="submit" >Create</button>
+            <button type="submit">Create</button>
         </form>  
     </div>
 </template>
@@ -25,7 +25,7 @@ export default {
                     date:today,
                     content:''
                 }
-            this.$emit('add-todo', newTodo) 
+            this.$emit('add-todo',newTodo) 
             }
             this.title = ''
         }

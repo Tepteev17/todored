@@ -6,7 +6,7 @@
                     v-model="todoContentFromId" 
                     @input="changeTextarea">{{ todoContentFromId }}
                     </textarea> 
-                   <button type="submit" @submit.prevent="onSubmit" v-on:click='ClickBtn'>Save</button>
+                   <button type="submit" v-on:click='ClickBtn'>Save</button>
         </div> 
     </div>
 </template>
@@ -22,20 +22,13 @@ export default {
         changeTextarea(){
             this.$emit('changesContent', this.todoContentFromId)
         },
-        onSubmit(){
-            console.log(1);
-            localStorage.clear()
-            this.todoList.forEach(el => {
-                localStorage.removeItem(el.title)
-                localStorage.setItem(el.title + el.id, JSON.stringify(el))
-            })
-        },
         ClickBtn(){
             const bodyScreen = document.querySelector('.main-screen')
             const panel = document.querySelector('.lateral-panel')
-            console.log(panel);
             panel.classList.toggle('active')
             bodyScreen.classList.toggle('active')
+            localStorage.removeItem('app.todored.todoList')
+            localStorage.setItem('app.todored.todoList',JSON.stringify(todoList))
         }
     }
 }

@@ -32,18 +32,13 @@ import mainToDo from '@/components/mainToDo'
 import AddTodo from '@/components/AddTodo'
 import placeCorrect from '@/components/placeCorrect'
 export default {
-  setup() {
+  setup(){
   localStorage.removeItem('loglevel:webpack-dev-server')
-  let i = 0
-  window.todoList = []
-    while (i < localStorage.length){
-      const nameEl = localStorage.key(i)
-      const el = localStorage.getItem(nameEl)
-      const elJson = JSON.parse(el)
-      todoList.push(elJson)
-      i = i + 1 
-    }
-    
+  window.todoList = JSON.parse(localStorage.getItem('app.todored.todoList'))
+  if(window.todoList === null){
+    window.todoList = []
+  }
+    console.log(window.todoList);
   },
   data(){
     return{
@@ -58,12 +53,12 @@ export default {
     removeTodo(id,title){
       this.todoList = this.todoList.filter(t=> t.id !== id)
       localStorage.removeItem(title)
-      
-
+      localStorage.removeItem('app.todored.todoList')
+      localStorage.setItem('app.todored.todoList',JSON.stringify(this.todoList))
     },
     addTodo(newTodo){
       this.todoList.unshift(newTodo)
-      localStorage.setItem(newTodo.title, JSON.stringify(newTodo))
+      localStorage.setItem('app.todored.todoList', JSON.stringify(this.todoList))
     },
     changesContent(changesContent){   
       let id = this.idEvent
